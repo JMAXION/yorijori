@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeTour() {
+  const navigate = useNavigate();
   return (
     <div>
       <section className="tourlist">
@@ -18,7 +20,13 @@ export default function HomeTour() {
           </li>
         </ul>
         <p className="tourlistbutton">
-          <button className="tourlist-button"> 새 여행 추가하기</button>
+          <button
+            onClick={() => navigate("/newtrip")}
+            className="tourlist-button"
+          >
+            {" "}
+            새 여행 추가하기
+          </button>
         </p>
       </section>
     </div>

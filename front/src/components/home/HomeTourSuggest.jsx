@@ -34,7 +34,7 @@ export default function HomeTourSuggest() {
   }
 
   return (
-    <div>
+    <div className="homesuggest">
       <section className="home-suggest">
         <p>추천 여행지 목록</p>
         <div style={{ maxHeight: "400px", overflowY: "scroll" }}>
@@ -51,16 +51,19 @@ export default function HomeTourSuggest() {
                       alt=""
                       className="tourlist-suggest-image"
                     />
-                    <p>{tour.name}</p>
+                    <p className="tourlist-suggest-details">
+                      <p>{tour.name}</p>
+                      <p
+                        onClick={() => {
+                          setTourIndex(rowIndex * 2 + tourSubIndex); // 올바른 인덱스를 설정
+                          openModal();
+                        }}
+                        className="tourlist-suggest-button"
+                      >
+                        상세보기
+                      </p>
+                    </p>
                   </div>
-                  <p
-                    onClick={() => {
-                      setTourIndex(rowIndex * 2 + tourSubIndex); // 올바른 인덱스를 설정
-                      openModal();
-                    }}
-                  >
-                    상세보기
-                  </p>
                 </li>
               ))}
             </ul>

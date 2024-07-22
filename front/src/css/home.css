@@ -1,14 +1,16 @@
 * {
   list-style-type: none;
   text-decoration: none;
+  margin: 0;
+  padding: 0;
 }
 .home {
   width: 1000px;
   margin: 2rem auto;
-  border: 1px solid green;
+  padding-top: 60px;
 }
 .tourlist {
-  border: 1px solid red;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.13);
 }
 .tourlist-set {
@@ -26,8 +28,8 @@
   margin-left: 0.5rem;
 }
 .tourlistbutton {
-  border: 1px solid red;
-  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 .tourlist-button {
   align-items: center;
@@ -38,16 +40,33 @@
   color: white;
   width: 200px;
   height: 60px;
+  cursor: pointer;
 }
-.home-suggest {
+.homesuggest {
   margin-top: 2rem;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 .tourlist-suggest {
   display: flex;
   justify-content: center;
+  gap: 2rem;
+  text-align: center;
+  align-items: center;
 }
 .tourlist-suggest-detail {
   width: 45%;
+  background-color: gray;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+.tourlist-suggest-details {
+  display: flex;
+  margin: 0 auto;
+  width: 400px;
+  justify-content: space-between;
+}
+.tourlist-suggest-button {
+  cursor: pointer;
 }
 .tourlist-suggest-image {
   width: 400px; /* 원하는 너비로 설정합니다 */

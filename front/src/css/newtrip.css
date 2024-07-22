@@ -1,0 +1,76 @@
+.newtrip {
+  padding-top: 100px;
+  width: 1000px;
+  margin: 0 auto;
+}
+.newtrip-lists {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+.newtrip-suggests {
+  width: 700px;
+  margin-bottom: 2rem;
+}
+.newtrip-list {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.newtrip-suggest {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+.newtrip-suggest-detail {
+  width: 45%;
+  background-color: gray;
+  padding-top: 1rem;
+  position: relative;
+  display: inline-block;
+}
+.newtrip-suggest-details {
+  display: flex;
+  margin: 0 auto;
+  width: 80%;
+  justify-content: space-between;
+}
+.newtrip-suggest-button {
+  cursor: pointer;
+}
+.newtrip-image {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+.fa-circle-plus-icon {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+.cart-item {
+  width: 200px;
+}
+.cart-item-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+.newtriptourbutton {
+  text-align: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.newtriptour-button {
+  width: 200px;
+  height: 50px;
+  background-color: green;
+  color: white;
+}
