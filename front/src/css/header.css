@@ -1,0 +1,9 @@
+.header {
+  border: 1px solid green;
+  display: flex;
+  justify-content: center;
+}
+.header-title {
+  width: 200px;
+  border: 1px solid red;
+}
