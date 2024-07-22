@@ -4,23 +4,30 @@ import TourDetailModal from "../home/TourDetailModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 
-export default function NewTripTour({ setMarkers }) {
+export default function NewTripTour({
+  setMarkers,
+  onNext,
+  cartList,
+  setCartList,
+}) {
   const [tourlist, setTourlist] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState("");
   const [tourIndex, setTourIndex] = useState(0);
-  const [cartList, setCartList] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalType("");
     setIsModalOpen(false);
   };
 
   const addToCart = (tour) => {
+    if (cartList.some((item) => item.id === tour.id)) {
+      alert("이미 장바구니에 담긴 여행지입니다");
+      return;
+    }
+
     setCartList((prevCartList) => [...prevCartList, tour]);
     setMarkers((prevMarkers) => [
       ...prevMarkers,
@@ -30,7 +37,7 @@ export default function NewTripTour({ setMarkers }) {
 
   const removeFromCart = (tourToRemove) => {
     setCartList((prevCartList) =>
-      prevCartList.filter((tour) => tour !== tourToRemove)
+      prevCartList.filter((tour) => tour.id !== tourToRemove.id)
     );
     setMarkers((prevMarkers) =>
       prevMarkers.filter(
@@ -46,21 +53,29 @@ export default function NewTripTour({ setMarkers }) {
       .get("/data/jejutour.json")
       .then((res) => {
         const shuffled = res.data.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(); // 최대 12개의 항목 선택
+        const selected = shuffled.slice(0, 12);
         setTourlist(selected);
       })
       .catch((error) => console.log(error));
   }, []);
 
   const handleComplete = () => {
-    axios
-      .post("/api/submitTours", cartList)
-      .then((response) => {
-        console.log("성공적으로 전송되었습니다.", response.data);
-      })
-      .catch((error) => {
-        console.error("전송 중 오류가 발생했습니다.", error);
-      });
+    console.log("카트 리스트:", cartList);
+
+    if (cartList.length === 0) {
+      alert("장바구니가 비어있습니다. 여행지를 선택해주세요.");
+      return;
+    }
+
+    // 로컬 스토리지에 선택된 여행지 저장
+    try {
+      localStorage.setItem("selectedTours", JSON.stringify(cartList));
+      alert("여행 계획이 성공적으로 저장되었습니다!");
+      onNext(); // 다음 단계로 이동
+    } catch (error) {
+      console.error("저장 중 오류 발생:", error);
+      alert("여행 계획 저장 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    }
   };
 
   const rows = [];
@@ -77,45 +92,47 @@ export default function NewTripTour({ setMarkers }) {
             style={{ maxHeight: "400px", overflowY: "scroll" }}
             className="newtrip-list"
           >
-            {rows.map((tours, rowIndex) => (
-              <ul className="newtrip-suggest" key={rowIndex}>
-                {tours.map((tour, tourSubIndex) => (
-                  <li
-                    className="newtrip-suggest-detail"
-                    key={`${rowIndex}-${tourSubIndex}`}
-                  >
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCirclePlus}
-                        className="fa-circle-plus-icon"
-                        onClick={() => addToCart(tour)}
-                      />
-                      <img
-                        src={tour.img}
-                        alt=""
-                        className="newtrip-image"
-                        onClick={() => {
-                          setTourIndex(rowIndex * 2 + tourSubIndex); // 올바른 인덱스를 설정
-                          openModal();
-                        }}
-                      />
-                      <p className="newtrip-suggest-details">
-                        <p>{tour.name}</p>
-                        <p
+            {tourlist &&
+              tourlist.length > 0 &&
+              rows.map((tours, rowIndex) => (
+                <ul className="newtrip-suggest" key={rowIndex}>
+                  {tours.map((tour, tourSubIndex) => (
+                    <li
+                      className="newtrip-suggest-detail"
+                      key={`${rowIndex}-${tourSubIndex}`}
+                    >
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCirclePlus}
+                          className="fa-circle-plus-icon"
+                          onClick={() => addToCart(tour)}
+                        />
+                        <img
+                          src={tour.img}
+                          alt=""
+                          className="newtrip-image"
                           onClick={() => {
-                            setTourIndex(rowIndex * 2 + tourSubIndex); // 올바른 인덱스를 설정
+                            setTourIndex(rowIndex * 2 + tourSubIndex);
                             openModal();
                           }}
-                          className="newtrip-suggest-button"
-                        >
-                          상세보기
+                        />
+                        <p className="newtrip-suggest-details">
+                          <p>{tour.name}</p>
+                          <p
+                            onClick={() => {
+                              setTourIndex(rowIndex * 2 + tourSubIndex);
+                              openModal();
+                            }}
+                            className="newtrip-suggest-button"
+                          >
+                            상세보기
+                          </p>
                         </p>
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ))}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ))}
             {isModalOpen && tourlist[tourIndex] && (
               <TourDetailModal
                 onClose={closeModal}
@@ -124,27 +141,53 @@ export default function NewTripTour({ setMarkers }) {
             )}
           </div>
         </section>
-        <section>
-          <p>장바구니 목록</p>
+        <section className="newtrip-cart">
+          <p>장바구니</p>
           <div style={{ maxHeight: "400px", overflowY: "scroll" }}>
-            {cartList.length > 0 ? (
-              cartList.map((tour, index) => (
-                <div key={index} className="cart-item">
-                  <FontAwesomeIcon
-                    icon={faCircleMinus}
-                    onClick={() => removeFromCart(tour)}
-                  />
-                  <img src={tour.img} alt="" className="cart-item-image" />
-                  <p>{tour.name}</p>
-                </div>
-              ))
-            ) : (
-              <p>장바구니가 비어 있습니다.</p>
-            )}
+            <ul className="newtrip-cart-list">
+              {cartList &&
+                cartList.length > 0 &&
+                cartList.map((tour, index) => (
+                  <li className="newtrip-cart-detail" key={index}>
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faCircleMinus}
+                        className="fa-circle-minus-icon"
+                        onClick={() => removeFromCart(tour)}
+                      />
+                      <img
+                        src={tour.img}
+                        alt=""
+                        className="newtrip-image"
+                        onClick={() => {
+                          setTourIndex(
+                            tourlist.findIndex((t) => t.id === tour.id)
+                          );
+                          openModal();
+                        }}
+                      />
+                      <p className="newtrip-cart-details">
+                        <p>{tour.name}</p>
+                        <p
+                          onClick={() => {
+                            setTourIndex(
+                              tourlist.findIndex((t) => t.id === tour.id)
+                            );
+                            openModal();
+                          }}
+                          className="newtrip-cart-button"
+                        >
+                          상세보기
+                        </p>
+                      </p>
+                    </div>
+                  </li>
+                ))}
+            </ul>
           </div>
-          <button onClick={handleComplete}>완료</button>
         </section>
       </div>
+      <button onClick={handleComplete}>완료</button>
     </div>
   );
 }

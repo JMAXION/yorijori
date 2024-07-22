@@ -1,5 +1,5 @@
 .newtrip {
-  padding-top: 100px;
+  padding-top: 120px;
   width: 1000px;
   margin: 0 auto;
 }
@@ -57,6 +57,7 @@
 }
 .cart-item {
   width: 200px;
+  background-color: antiquewhite;
 }
 .cart-item-image {
   width: 100%;
