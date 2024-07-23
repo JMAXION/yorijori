@@ -53,7 +53,7 @@ export default function NewTripTour({
       .get("/data/jejutour.json")
       .then((res) => {
         const shuffled = res.data.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 12);
+        const selected = shuffled.slice();
         setTourlist(selected);
       })
       .catch((error) => console.log(error));

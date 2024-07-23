@@ -8,14 +8,12 @@ export default function NewTripStep2({ onNext }) {
   useEffect(() => {
     const savedTours = localStorage.getItem("selectedTours");
     if (savedTours) {
-      console.log("로드된 투어:", JSON.parse(savedTours));
       setSelectedTours(JSON.parse(savedTours));
     }
   }, []);
 
   const handleStartingPointChange = (e) => {
     const selectedTourId = e.target.value;
-    console.log("선택된 값:", selectedTourId);
     setStartingPoint(selectedTourId);
   };
 
@@ -29,21 +27,20 @@ export default function NewTripStep2({ onNext }) {
       return;
     }
 
-    // selectedTour 찾기
-    const selectedTour = selectedTours.find((tour) => {
-      console.log(`투어 ID: ${tour.id}, 선택된 시작지: ${startingPoint}`);
-      return tour.id === startingPoint; // 필요시 parseInt 사용
-    });
-
-    console.log("선택된 투어:", selectedTour);
+    const selectedTour = selectedTours.find(
+      (tour) => tour.id.toString() === startingPoint
+    );
 
     if (!selectedTour) {
       alert("유효한 시작지를 선택해주세요.");
       return;
     }
 
-    // 다음 단계로 이동하는 로직 추가
-    onNext({ tripName, startingPoint: selectedTour.name });
+    onNext({
+      tripName: tripName,
+      startingPoint: selectedTour.name,
+      selectedTours: selectedTours,
+    });
   };
 
   return (

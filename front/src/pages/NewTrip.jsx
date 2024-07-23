@@ -37,10 +37,11 @@ export default function NewTrip() {
           onNext={handleNextStep}
         />
       )}
-      {step === 3 && (
+      {step === 3 && tripData && (
         <NewTripStep3
           tripName={tripData.tripName}
           startingPoint={tripData.startingPoint}
+          selectedTours={tripData.selectedTours}
         />
       )}
     </div>
