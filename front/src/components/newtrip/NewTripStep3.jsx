@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 const { kakao } = window;
 
 // Define the haversineDistance function
@@ -30,7 +30,7 @@ export default function NewTripStep3({
   selectedTours = [],
 }) {
   const mapRef = useRef(null);
-  console.log("셀렉티드투어", selectedTours);
+  const [orderedTours, setOrderedTours] = useState([]);
 
   useEffect(() => {
     if (!kakao || !kakao.maps) {
@@ -65,6 +65,7 @@ export default function NewTripStep3({
       startTour.longitude
     );
     const orderedPoints = [startPoint];
+    const orderedToursList = [startTour];
 
     let remainingPoints = points.filter((tour) => tour.name !== startingPoint);
 
@@ -87,9 +88,12 @@ export default function NewTripStep3({
 
       if (nearestPoint) {
         orderedPoints.push(nearestPoint.point);
+        orderedToursList.push(nearestPoint);
         remainingPoints.splice(nearestIndex, 1);
       }
     }
+
+    setOrderedTours(orderedToursList);
 
     const linePath = orderedPoints.map((point) => point);
     const polyline = new kakao.maps.Polyline({
@@ -119,7 +123,7 @@ export default function NewTripStep3({
     <div className="newtrip">
       <h2>{tripName} 여행 경로</h2>
       <ol>
-        {selectedTours.map((tour, index) => (
+        {orderedTours.map((tour, index) => (
           <li key={index}>{`${index + 1}. ${tour.name}`}</li>
         ))}
       </ol>
