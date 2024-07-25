@@ -1,6 +1,4 @@
 .header {
-  display: flex;
-  justify-content: center;
   background-color: rgb(255, 251, 237);
   position: fixed;
   top: 0;
@@ -8,6 +6,19 @@
   width: 100%;
   z-index: 200;
 }
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+}
 .header-title {
+  margin: 0 auto;
   width: 200px;
+}
+.link {
+  color: black;
+  cursor: pointer;
 }

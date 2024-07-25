@@ -5,22 +5,13 @@ import TourDetailModal from "./TourDetailModal";
 export default function HomeTourSuggest() {
   const [tourlist, setTourlist] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState("");
   const [tourIndex, setTourIndex] = useState(0);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalType("");
-    setIsModalOpen(false);
-  };
+  const url = "http://localhost:8080/map";
 
   useEffect(() => {
-    axios
-      .get("/data/jejutour.json")
+    axios({ method: "post", url: url })
       .then((res) => {
+        console.log(res.data);
         const shuffled = res.data.sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 12); // 최대 12개의 항목 선택
         setTourlist(selected);
@@ -28,6 +19,13 @@ export default function HomeTourSuggest() {
       .catch((error) => console.log(error));
   }, []);
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const rows = [];
   for (let i = 0; i < tourlist.length; i += 2) {
     rows.push(tourlist.slice(i, i + 2));

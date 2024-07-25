@@ -180,5 +180,44 @@
     "detailed_category": "기타관광",
     "information": "스누피 가든 하우스는 감정에 솔직하고 개성있는 피너츠 친구들을 만나 그들 간의 상호 관계를 통한 공감과 위로의 메세지를 얻는 곳입니다.",
     "img": "https://www.jejumobile.kr/datas/0c2a615044cb84fa4931aeed9ab16ce7.jpg"
+  },
+  {
+    "id": 15,
+    "name": "사려니숲길",
+    "latitude": "33.415",
+    "longitude": "126.6485",
+    "province": "제주특별자치도",
+    "city": "제주시",
+    "address": "제주 제주시 조천읍 교래리 산137-1",
+    "category": "관광지",
+    "detailed_category": "레저스포츠",
+    "information": "제주의 숨은 비경 31곳 중 하나로, 비자림로를 시작으로 물찻오름과 사려니 오름을 거쳐가는 삼나무가 우거진 숲길입니다. 사려니오름까지 이어지는 숲길이기 때문에 사려니숲길이라고 불립니다.",
+    "img": "https://api.cdn.visitjeju.net/photomng/imgpath/201908/19/4a7384f3-3ea5-4b56-a519-20cd569686b1.jpg"
+  },
+  {
+    "id": 16,
+    "name": "월정리해변",
+    "latitude": "33.5559",
+    "longitude": "126.7961",
+    "province": "제주특별자치도",
+    "city": "제주시",
+    "address": "제주 제주시 구좌읍 월정리 33-3",
+    "category": "관광지",
+    "detailed_category": "자연관광",
+    "information": "제주도의 동쪽에 위치하고 있는 마을인 월정리는 달이 머문다는 뜻의 이름을 가진 서정적인 풍경의 마을입니다. ",
+    "img": "https://api.cdn.visitjeju.net/photomng/imgpath/201804/30/ec362343-4c4b-4da2-905d-1d4be8b26d44.jpg"
+  },
+  {
+    "id": 17,
+    "name": "만장굴",
+    "latitude": "33.5278",
+    "longitude": "126.7693",
+    "province": "제주특별자치도",
+    "city": "제주시",
+    "address": "제주시 만장굴길 182-0",
+    "category": "관광지",
+    "detailed_category": "자연관광",
+    "information": "1962년 12월 7일 김녕사굴과 함께 천연기념물로 지정되었습니다. 총 길이 약 7.4km, 최대 높이 23m, 최대 폭은 18m이며, 1977∼1986년까지 한·일합동조사가 실시되었습니다.",
+    "img": "https://api.cdn.visitjeju.net/photomng/imgpath/202110/28/a8c617a7-0b5e-4771-825b-c68d96904443.jpg"
   }
 ]

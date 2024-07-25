@@ -30,6 +30,7 @@ export default function TourDetailModal({ onClose, places }) {
     <div className="modal-overlay">
       <div ref={modalRef} className={`modal ${fadeOut ? "fade-out" : ""}`}>
         <p>{places.name}</p>
+        <p>{places.address}</p>
         <section className="tourlist-modal-detail">
           <img src={places.img} alt="" className="tourlist-modal-image" />
           <TourDetailMap places={places} />

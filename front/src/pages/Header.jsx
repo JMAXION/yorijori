@@ -5,9 +5,19 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <div className="header">
-      <Link to="/">
-        <img src="/images/character_logo.png" alt="" className="header-title" />
-      </Link>
+      <p className="header-main">
+        <p>menu</p>
+        <Link to="/">
+          <img
+            src="/images/character_logo.png"
+            alt=""
+            className="header-title"
+          />
+        </Link>
+        <Link to="/login" className="link">
+          <p>Login</p>
+        </Link>
+      </p>
     </div>
   );
 }

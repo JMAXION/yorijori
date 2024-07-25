@@ -1,0 +1,39 @@
+.login {
+  padding-top: 120px;
+  width: 1000px;
+  margin: 2rem auto;
+  text-align: center;
+}
+.login-section {
+  width: 500px;
+  padding: 1rem 0;
+  margin: 0 auto;
+}
+.login-section-table-tr {
+  height: 20px;
+}
+.login-section-table-tr:last-child {
+  padding-top: 1rem;
+}
+.login-section-table-tr td:last-child {
+  width: 400px;
+  padding: 7px 13px 6px;
+}
+.login-section-input {
+  width: 100%; /* 필요한 만큼 너비를 조정하세요 */
+  height: 40px; /* 필요한 만큼 높이를 조정하세요 */
+  padding: 10px; /* 입력 필드 안쪽 여백을 추가하여 좀 더 시각적으로 보기 좋게 만듭니다 */
+  box-sizing: border-box; /* 패딩을 포함한 전체 너비와 높이를 유지합니다 */
+}
+.buttons {
+  margin: 1rem 0;
+}
+.login-button {
+  width: 100px;
+  height: 40px;
+  color: white;
+  background-color: black;
+}
+.signinbutton {
+  margin-left: 1rem;
+}

@@ -13,6 +13,7 @@ export default function NewTripTour({
   const [tourlist, setTourlist] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tourIndex, setTourIndex] = useState(0);
+  const url = "http://localhost:8080/map";
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -49,8 +50,7 @@ export default function NewTripTour({
   };
 
   useEffect(() => {
-    axios
-      .get("/data/jejutour.json")
+    axios({ method: "post", url: url })
       .then((res) => {
         const shuffled = res.data.sort(() => 0.5 - Math.random());
         const selected = shuffled.slice();
@@ -187,7 +187,11 @@ export default function NewTripTour({
           </div>
         </section>
       </div>
-      <button onClick={handleComplete}>완료</button>
+      <p className="newtriptourbutton">
+        <button onClick={handleComplete} className="newtriptour-button">
+          완료
+        </button>
+      </p>
     </div>
   );
 }
