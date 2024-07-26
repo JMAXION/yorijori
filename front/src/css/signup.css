@@ -4,3 +4,79 @@
   margin: 2rem auto;
   text-align: center;
 }
+.signup-table {
+  margin: 1rem auto;
+}
+.signup-table-title-td {
+  text-align: left;
+  height: 32px;
+  padding-right: 1rem;
+}
+.signup-table-content-td {
+  text-align: left;
+  height: 32px;
+}
+.signup-table-id {
+  width: 400px;
+}
+.signup-table-pass {
+  width: 400px;
+}
+.signup-table-passcheck {
+  width: 400px;
+}
+.signup-table-name {
+  width: 400px;
+}
+.signup-table-email {
+  width: 150px;
+}
+.signup-table-edomain {
+  width: 150px;
+}
+.signup-table-phone {
+  width: 100px;
+}
+.signup-table-phonenumber {
+  width: 300px;
+}
+.signup-table-address-detail1 {
+  width: 200px;
+}
+.signup-table-address-detail2 {
+  width: 400px;
+}
+.signup-table-addresscode {
+  width: 190px;
+  margin-left: 5px;
+}
+.signup-table-idbutton,
+.signup-table-addresssearchbutton {
+  margin-left: 1rem;
+  width: 100px;
+  color: white;
+  background-color: black;
+}
+.signup-pre-button,
+.signup-next-button {
+  width: 195px;
+  height: 32px;
+  margin: 2rem 0;
+}
+.signup-pre-button {
+  margin-right: 1rem;
+}
+.signup-congrat {
+  font-size: 2rem;
+}
+.signup-congrat-image {
+  width: 1000px;
+}
+.signup-congrats {
+  margin-top: 1rem;
+}
+.signup-login-button {
+  margin-top: 1.5rem;
+  width: 200px;
+  height: 32px;
+}

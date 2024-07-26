@@ -1,12 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { getUser, removeUser } from "../../util/localStorage.js";
 
 export default function HomeTour() {
   const navigate = useNavigate();
+  const userInfo = getUser();
+  console.log("유저인포-->", userInfo);
   return (
     <div>
       <section className="tourlist">
-        <p>나의 여행지 목록</p>
+        {userInfo ? (
+          <p>{userInfo.userId}님의 여행지 목록</p>
+        ) : (
+          <p>나의 여행지 목록</p>
+        )}
+
         <ul>
           <li>day1</li>
           <li className="tourlist-set">

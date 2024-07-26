@@ -138,33 +138,36 @@ export default function SignupStep2({
         <h3>개인정보입력</h3>
         <p>회원가입에 필요한 정보를 입력합니다.</p>
       </div>
-      <ul className="signup-info">
-        <li className="signup-info-detail">
-          <p>
-            <span className="signup-info-1">
-              아이디<span>*</span>
-            </span>
+      <table className="signup-table">
+        <tr>
+          <td className="signup-table-title-td">
+            아이디<span>*</span>
+          </td>
+          <td className="signup-table-content-td">
             <input
               type="text"
               name="userId"
               value={formData.userId}
               onChange={handleChange}
               ref={refs.userIdRef}
-              className="signupstep2-id"
+              className="signup-table-id"
             />
             <button
               type="button"
               onClick={handleIdCheck}
-              className="signup2-info-id-button"
+              className="signup-table-idbutton"
               style={{ cursor: "pointer" }}
             >
               중복확인
             </button>
-          </p>
-          <p>
-            <span className="signup-info-1">
-              비밀번호<span>*</span>
-            </span>
+          </td>
+        </tr>
+        <tr>
+          <td className="signup-table-title-td">
+            {" "}
+            비밀번호<span>*</span>
+          </td>
+          <td className="signup-table-content-td">
             <input
               type="password"
               name="userPass"
@@ -172,13 +175,15 @@ export default function SignupStep2({
               onChange={handleChange}
               ref={refs.userPassRef}
               placeholder="8~12자 의 영문(대소문자,숫자,특수문자)를 조합해서 만들어주세요"
-              className="signupstep2-pass"
+              className="signup-table-pass"
             />
-          </p>
-          <p>
-            <span className="signup-info-1">
-              비밀번호 확인<span>*</span>
-            </span>
+          </td>
+        </tr>
+        <tr>
+          <td className="signup-table-title-td">
+            비밀번호 확인<span>*</span>
+          </td>
+          <td className="signup-table-content-td">
             <input
               type="password"
               name="userPassCheck"
@@ -186,13 +191,15 @@ export default function SignupStep2({
               onChange={handleChange}
               ref={refs.userPassCheckRef}
               placeholder="확인을 위하여 위와 동일하게 입력해주세요"
-              className="signupstep2-passcheck"
+              className="signup-table-passcheck"
             />
-          </p>
-          <p>
-            <span className="signup-info-1">
-              이름<span>*</span>
-            </span>
+          </td>
+        </tr>
+        <tr>
+          <td className="signup-table-title-td">
+            이름<span>*</span>
+          </td>
+          <td className="signup-table-content-td">
             <input
               type="text"
               name="userName"
@@ -200,20 +207,22 @@ export default function SignupStep2({
               onChange={handleChange}
               ref={refs.userNameRef}
               placeholder="한글/영문으로 입력해주세요"
-              className="signupstep2-name"
+              className="signup-table-name"
             />
-          </p>
-          <p>
-            <span className="signup-info-1">
-              이메일<span>*</span>
-            </span>
+          </td>
+        </tr>
+        <tr>
+          <td className="signup-table-title-td">
+            이메일<span>*</span>
+          </td>
+          <td className="signup-table-content-td">
             <input
               type="text"
               name="emailId"
               value={formData.emailId}
               ref={refs.emailIdRef}
               onChange={handleChange}
-              className="signup2-email"
+              className="signup-table-email"
             />{" "}
             @
             <input
@@ -222,53 +231,85 @@ export default function SignupStep2({
               value={formData.emailDomain}
               ref={refs.emailDomainRef}
               onChange={handleChange}
+              className="signup-table-edomain"
             />
             <select
               name="emailDomain"
               onChange={(e) => changeEmailDomain(e, refs, handleChange)}
-              className="signup-email-domaincheck"
             >
               <option value="self">직접입력</option>
               <option value="naver.com">네이버</option>
               <option value="gmail.com">구글</option>
               <option value="hotmail.com">MS</option>
             </select>
-          </p>
-          <p>
-            <span className="signup-info-1">
-              휴대폰 번호<span>*</span>
-            </span>
-            <span className="signup-info-phonenumber">
-              <select
-                name="phoneNumber1"
-                onChange={handleChange}
-                className="signup-info-phone-select"
-              >
-                <option value="010">010</option>
-                <option value="011">011</option>
-                <option value="016">016</option>
-                <option value="017">017</option>
-              </select>
-              <input
-                type="text"
-                name="phoneNumber2"
-                value={formData.phoneNumber2}
-                ref={refs.phoneNumber2Ref}
-                onChange={handleChange}
-                placeholder="-없이 입력해주세요"
-                className="signup-info-phone-number "
-              />
-            </span>
-          </p>
-          <p>
-            <span className="signup-info-1">주소</span>
-
+          </td>
+        </tr>
+        <tr>
+          <td className="signup-table-title-td">
+            휴대폰 번호<span>*</span>
+          </td>
+          <td className="signup-table-content-td">
+            <select
+              name="phoneNumber1"
+              onChange={handleChange}
+              className="signup-table-phone"
+            >
+              <option value="010">010</option>
+              <option value="011">011</option>
+              <option value="016">016</option>
+              <option value="017">017</option>
+            </select>
+            <input
+              type="text"
+              name="phoneNumber2"
+              value={formData.phoneNumber2}
+              ref={refs.phoneNumber2Ref}
+              onChange={handleChange}
+              placeholder="-없이 입력해주세요"
+              className="signup-table-phonenumber "
+            />
+          </td>
+        </tr>
+        <tr>
+          <td className="signup-table-title-td">주소</td>
+          <td className="signup-table-content-td">
             <input
               type="text"
               name="address"
               value={formData.address}
-              className="signup-info-address-detail1"
+              className="signup-table-address-detail1"
             />
+
+            <input
+              type="text"
+              name="zipcode"
+              value={formData.zipcode}
+              className="signup-table-addresscode"
+            />
+            <button
+              type="button"
+              onClick={handleToggle}
+              className="signup-table-addresssearchbutton"
+              style={{ cursor: "pointer" }}
+            >
+              주소검색
+            </button>
+          </td>
+          {isOpen && (
+            <div>
+              <DaumPostcode
+                className="postmodal"
+                theme={themeObj}
+                style={postCodeStyle}
+                onComplete={completeHandler}
+                onClose={closeHandler}
+              />
+            </div>
+          )}
+        </tr>
+        <tr>
+          <td className="signup-table-title-td"></td>
+          <td className="signup-table-content-td">
             <input
               type="text"
               name="detailAddress"
@@ -276,48 +317,32 @@ export default function SignupStep2({
               onChange={handleChange}
               ref={refs.detailAddressRef}
               placeholder="상세주소를 입력해주세요"
-              className="signup-info-address-detail2"
+              className="signup-table-address-detail2"
             />
-            <input type="text" name="zipcode" value={formData.zipcode} />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td className="signup-table-content-td">
             <button
               type="button"
-              onClick={handleToggle}
-              className="signup-info-addresssearchbutton"
+              onClick={pre}
+              className="signup-pre-button"
               style={{ cursor: "pointer" }}
             >
-              주소검색
+              뒤로
             </button>
-          </p>
-        </li>
-
-        {isOpen && (
-          <div>
-            <DaumPostcode
-              className="postmodal"
-              theme={themeObj}
-              style={postCodeStyle}
-              onComplete={completeHandler}
-              onClose={closeHandler}
-            />
-          </div>
-        )}
-      </ul>
-      <button
-        type="button"
-        onClick={pre}
-        className="signup-pre-button"
-        style={{ cursor: "pointer" }}
-      >
-        뒤로
-      </button>
-      <button
-        type="button"
-        onClick={handleSubmit}
-        className="signup-next-button"
-        style={{ cursor: "pointer" }}
-      >
-        가입완료
-      </button>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="signup-next-button"
+              style={{ cursor: "pointer" }}
+            >
+              가입완료
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
   );
 }

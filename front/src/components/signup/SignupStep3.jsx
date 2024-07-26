@@ -9,7 +9,10 @@ export default function SignupStep3() {
   return (
     <div className="signup">
       <h1 className="signup-congrat">CONGRATULATION!</h1>
-      <img src="https://www.joseilbo.com/gisa_img_origin/16872229291687222929_joseedu_origin.jpg" />
+      <img
+        src="https://cdn.tourtoctoc.com/news/photo/202305/520_2742_5617.jpg"
+        className="signup-congrat-image"
+      />
       <p className="signup-congrats">회원가입에 성공하셨습니다.</p>
 
       <button
