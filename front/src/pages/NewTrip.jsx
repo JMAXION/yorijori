@@ -42,6 +42,7 @@ export default function NewTrip() {
           tripName={tripData.tripName}
           startingPoint={tripData.startingPoint}
           selectedTours={tripData.selectedTours}
+          departureTime={tripData.departureTime}
         />
       )}
     </div>

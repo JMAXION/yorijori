@@ -13,6 +13,10 @@ export default function NewTripStep2({ onNext }) {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("Departure time changed:", departureTime);
+  }, [departureTime]);
+
   const handleStartingPointChange = (e) => {
     const selectedTourId = e.target.value;
     setStartingPoint(selectedTourId);
@@ -23,7 +27,12 @@ export default function NewTripStep2({ onNext }) {
   };
 
   const handleDepartureTimeChange = (e) => {
-    setDepartureTime(e.target.value);
+    const value = e.target.value;
+    if (value) {
+      setDepartureTime(`${value}:00`);
+    } else {
+      setDepartureTime("");
+    }
   };
 
   const handleSubmit = () => {
@@ -41,12 +50,16 @@ export default function NewTripStep2({ onNext }) {
       return;
     }
 
-    onNext({
-      tripName: tripName,
+    const tripData = {
+      tripName,
       startingPoint: selectedTour.name,
-      selectedTours: selectedTours,
-      departureTime: departureTime,
-    });
+      selectedTours,
+      departureTime,
+    };
+
+    console.log("Submitting trip data:", tripData);
+
+    onNext(tripData);
   };
 
   return (
@@ -69,7 +82,10 @@ export default function NewTripStep2({ onNext }) {
       </section>
       <section>
         <p>여행 출발 시간을 정해주세요!</p>
-        <select value={departureTime} onChange={handleDepartureTimeChange}>
+        <select
+          value={departureTime.split(":")[0]}
+          onChange={handleDepartureTimeChange}
+        >
           <option value="">선택해주세요</option>
           {Array.from({ length: 8 }, (_, i) => i + 10).map((hour) => (
             <option key={hour} value={hour}>
