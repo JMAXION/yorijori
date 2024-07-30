@@ -42,4 +42,5 @@ where user_id = 'test123';
 -- 로그인 (any_value(user_pass) user_pass 라고 예전에는 사용했음)
 select count(user_id) cnt, any_value(user_pass) user_pass, any_value(user_name) user_name from jeju_member where user_id = 'test';
 
-delete  from jeju_member where user_id = "domino"
+delete from jeju_member where user_id = "test";
+

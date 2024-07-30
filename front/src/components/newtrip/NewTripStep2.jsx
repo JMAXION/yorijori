@@ -4,6 +4,7 @@ export default function NewTripStep2({ onNext }) {
   const [selectedTours, setSelectedTours] = useState([]);
   const [startingPoint, setStartingPoint] = useState("");
   const [tripName, setTripName] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
 
   useEffect(() => {
     const savedTours = localStorage.getItem("selectedTours");
@@ -21,9 +22,13 @@ export default function NewTripStep2({ onNext }) {
     setTripName(e.target.value);
   };
 
+  const handleDepartureTimeChange = (e) => {
+    setDepartureTime(e.target.value);
+  };
+
   const handleSubmit = () => {
-    if (!tripName || !startingPoint) {
-      alert("여행 이름과 시작지를 모두 입력해주세요.");
+    if (!tripName || !startingPoint || !departureTime) {
+      alert("여행 이름, 시작지, 출발 시간을 모두 입력해주세요.");
       return;
     }
 
@@ -40,6 +45,7 @@ export default function NewTripStep2({ onNext }) {
       tripName: tripName,
       startingPoint: selectedTour.name,
       selectedTours: selectedTours,
+      departureTime: departureTime,
     });
   };
 
@@ -57,6 +63,17 @@ export default function NewTripStep2({ onNext }) {
           {selectedTours.map((tour) => (
             <option key={tour.id} value={tour.id}>
               {tour.name}
+            </option>
+          ))}
+        </select>
+      </section>
+      <section>
+        <p>여행 출발 시간을 정해주세요!</p>
+        <select value={departureTime} onChange={handleDepartureTimeChange}>
+          <option value="">선택해주세요</option>
+          {Array.from({ length: 8 }, (_, i) => i + 10).map((hour) => (
+            <option key={hour} value={hour}>
+              {hour}:00
             </option>
           ))}
         </select>

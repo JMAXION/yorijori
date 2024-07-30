@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { getUser } from "../../util/localStorage";
 const { kakao } = window;
 
-// Define the haversineDistance function
 const haversineDistance = (coords1, coords2) => {
   const toRad = (x) => (x * Math.PI) / 180;
 
@@ -28,9 +28,12 @@ export default function NewTripStep3({
   tripName,
   startingPoint,
   selectedTours = [],
+  startTime = "09:00", // 출발시간 추가
 }) {
+  const userInfo = getUser();
   const mapRef = useRef(null);
   const [orderedTours, setOrderedTours] = useState([]);
+  const [splitTours, setSplitTours] = useState({}); // 날짜별로 나눠진 여행지
 
   useEffect(() => {
     if (!kakao || !kakao.maps) {
@@ -52,7 +55,6 @@ export default function NewTripStep3({
     if (selectedTours.length === 0) return;
 
     const startTour = selectedTours.find((tour) => tour.name === startingPoint);
-
     if (!startTour) return;
 
     const points = selectedTours.map((tour) => ({
@@ -95,43 +97,103 @@ export default function NewTripStep3({
 
     setOrderedTours(orderedToursList);
 
-    const linePath = orderedPoints.map((point) => point);
-    const polyline = new kakao.maps.Polyline({
-      path: linePath,
-      strokeWeight: 5,
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.7,
-      strokeStyle: "solid",
-    });
+    // 시간 계산 로직 추가
+    const splitToursByDay = calculateTourTimes(orderedToursList, startTime);
+    setSplitTours(splitToursByDay);
 
-    polyline.setMap(map);
+    // 각 날별로 경로와 색깔을 나누어 지도에 표시
+    const colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"]; // 필요한 만큼 색깔 추가
+    Object.keys(splitToursByDay).forEach((day, index) => {
+      const dayTours = splitToursByDay[day];
+      const linePath = dayTours.map(
+        (tour) => new kakao.maps.LatLng(tour.latitude, tour.longitude)
+      );
+      const polyline = new kakao.maps.Polyline({
+        path: linePath,
+        strokeWeight: 5,
+        strokeColor: colors[index % colors.length], // 색깔 변경
+        strokeOpacity: 0.7,
+        strokeStyle: "solid",
+      });
 
-    orderedPoints.forEach((point, index) => {
-      new kakao.maps.Marker({
-        map: map,
-        position: point,
-        title: selectedTours.find(
-          (tour) =>
-            tour.latitude === point.getLat() &&
-            tour.longitude === point.getLng()
-        )?.name,
+      polyline.setMap(map);
+
+      dayTours.forEach((tour) => {
+        new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(tour.latitude, tour.longitude),
+          title: tour.name,
+        });
       });
     });
-  }, [selectedTours, startingPoint]);
+  }, [selectedTours, startingPoint, startTime]);
+
+  const calculateTourTimes = (tours, startTime) => {
+    const startDate = new Date();
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+    startDate.setHours(startHour, startMinute, 0, 0);
+
+    const splitToursByDay = {};
+    let currentDate = new Date(startDate);
+    let currentDay = 1;
+    let currentTime = new Date(startDate);
+
+    splitToursByDay[`day${currentDay}`] = [];
+
+    tours.forEach((tour, index) => {
+      const stayDuration = tour.stayDuration || 60; // 기본 머무는 시간 60분
+      const travelTime =
+        index === 0 ? 0 : calculateTravelTime(tours[index - 1], tour);
+
+      currentTime.setMinutes(currentTime.getMinutes() + travelTime);
+
+      if (currentTime.getHours() >= 20) {
+        currentDay += 1;
+        currentDate.setDate(currentDate.getDate() + 1);
+        currentDate.setHours(9, 0, 0, 0); // 다음날 9시로 초기화
+        currentTime = new Date(currentDate);
+        splitToursByDay[`day${currentDay}`] = [];
+      }
+
+      splitToursByDay[`day${currentDay}`].push({
+        ...tour,
+        startTime: new Date(currentTime),
+      });
+
+      currentTime.setMinutes(currentTime.getMinutes() + stayDuration);
+    });
+
+    return splitToursByDay;
+  };
+
+  const calculateTravelTime = (tour1, tour2) => {
+    const distance = haversineDistance(
+      new kakao.maps.LatLng(tour1.latitude, tour1.longitude),
+      new kakao.maps.LatLng(tour2.latitude, tour2.longitude)
+    );
+    const speed = 50; // 이동 속도 (km/h), 필요 시 조정
+    return (distance / speed) * 60; // 분 단위로 반환
+  };
 
   return (
-    <div className="newtrip">
-      <h2>{tripName} 여행 경로</h2>
-      <ol>
-        {orderedTours.map((tour, index) => (
-          <li key={index}>{`${index + 1}. ${tour.name}`}</li>
+    <div className="new-trip">
+      <div ref={mapRef} style={{ width: "100%", height: "500px" }}></div>
+      <div>
+        <h1>{userInfo.userId} 님의 여행계획</h1>
+        <h2>여행명 - {tripName}</h2>
+        {Object.keys(splitTours).map((day) => (
+          <div key={day}>
+            <h3>{day}</h3>
+            <ul>
+              {splitTours[day].map((tour, index) => (
+                <li key={index}>
+                  {tour.name} - {tour.startTime.toLocaleTimeString()} 출발
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ol>
-      <div
-        id="map"
-        ref={mapRef}
-        style={{ width: "100%", height: "500px" }}
-      ></div>
+      </div>
     </div>
   );
 }
