@@ -120,3 +120,13 @@
   padding: 1rem 2rem;
   background-color: rgba(0, 0, 0, 0.05);
 }
+.hometour-list-container {
+  height: 400px;
+  max-height: 400px;
+  margin: 1rem 0;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.hometour-list-image {
+  width: 200px;
+}

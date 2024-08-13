@@ -35,6 +35,28 @@ export default function NewTripStep3({
   const [orderedTours, setOrderedTours] = useState([]);
   const [splitTours, setSplitTours] = useState({});
   console.log("출발시간-->", departureTime);
+  const [tripInfo, setTripInfo] = useState(() => {
+    const savedTripInfo = localStorage.getItem("tripInfo");
+    return savedTripInfo
+      ? JSON.parse(savedTripInfo)
+      : {
+          destination: "",
+          startDate: "",
+          endDate: "",
+        };
+  });
+
+  useEffect(() => {
+    localStorage.setItem("selectedTours", JSON.stringify(selectedTours));
+  }, [selectedTours]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTripInfo({
+      ...tripInfo,
+      [name]: value,
+    });
+  };
 
   useEffect(() => {
     if (!kakao || !kakao.maps) {

@@ -13,3 +13,14 @@ export const removeUser = () => {
   removeCookie("x-auth-jwt");
   localStorage.clear();
 };
+
+export const getTripInfo = () => {
+  let selectedTours =
+    localStorage.getItem("selectedTours") && getCookie("x-auth-jwt")
+      ? JSON.parse(localStorage.getItem("selectedTours"))
+      : null;
+
+  console.log("셀렉티드투어-->", selectedTours);
+
+  return selectedTours;
+};
